@@ -62,30 +62,34 @@ namespace Com.EnjoyCodes.iOSAppIconGenerator
         {
             if (this.btnSave.Text == "保存")
             {
+                if (string.IsNullOrEmpty(this._imgPath) || !File.Exists(this._imgPath))
+                    this.btnOpen_Click(sender, e);
+
                 if (Common.Config.Icons == null || Common.Config.Icons.Count == 0)
-                    MessageBox.Show("未读取到图标配置！请配置要截取的图标。");
-                else
                 {
-                    if (!Directory.Exists(this._imgFolder))
-                        Directory.CreateDirectory(this._imgFolder);
-
-                    Bitmap b = (Bitmap)Image.FromFile(this._imgPath);
-                    foreach (var item in Common.Config.Icons)
-                    {
-                        Bitmap b1 = (Bitmap)b.Clone();
-
-                        var imgFolder = Path.Combine(this._imgFolder, string.IsNullOrEmpty(item.Tag) ? string.Empty : item.Tag);
-
-                        if (!Directory.Exists(imgFolder))
-                            Directory.CreateDirectory(imgFolder);
-
-                        b1.Resize(item.Width, item.Height).Save(Path.Combine(imgFolder, item.Name));
-                        b1.Dispose();
-                    }
-                    b.Dispose();
-
-                    this.btnSave.Text = "保存成功";
+                    MessageBox.Show("未读取到图标配置！请配置要截取的图标。");
+                    return;
                 }
+
+                if (!Directory.Exists(this._imgFolder))
+                    Directory.CreateDirectory(this._imgFolder);
+
+                Bitmap b = (Bitmap)Image.FromFile(this._imgPath);
+                foreach (var item in Common.Config.Icons)
+                {
+                    Bitmap b1 = (Bitmap)b.Clone();
+
+                    var imgFolder = Path.Combine(this._imgFolder, string.IsNullOrEmpty(item.Tag) ? string.Empty : item.Tag);
+
+                    if (!Directory.Exists(imgFolder))
+                        Directory.CreateDirectory(imgFolder);
+
+                    b1.Resize(item.Width, item.Height).Save(Path.Combine(imgFolder, item.Name));
+                    b1.Dispose();
+                }
+                b.Dispose();
+
+                this.btnSave.Text = "保存成功";
             }
             else
             {
@@ -93,6 +97,9 @@ namespace Com.EnjoyCodes.iOSAppIconGenerator
                     System.Diagnostics.Process.Start(this._imgFolder);
             }
         }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        { System.Diagnostics.Process.Start("http://enjoycodes.com/Home/ViewNote/280144fe-64eb-4087-98c9-4829ae106f33"); }
 
         private void btnExit_Click(object sender, EventArgs e)
         { this.Close(); }
