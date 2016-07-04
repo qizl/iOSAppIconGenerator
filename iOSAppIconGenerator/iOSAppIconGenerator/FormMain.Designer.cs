@@ -39,7 +39,7 @@
             // txtImgPath
             // 
             this.txtImgPath.Font = new System.Drawing.Font("宋体", 12F);
-            this.txtImgPath.Location = new System.Drawing.Point(188, 48);
+            this.txtImgPath.Location = new System.Drawing.Point(188, 50);
             this.txtImgPath.Name = "txtImgPath";
             this.txtImgPath.ReadOnly = true;
             this.txtImgPath.Size = new System.Drawing.Size(519, 26);
